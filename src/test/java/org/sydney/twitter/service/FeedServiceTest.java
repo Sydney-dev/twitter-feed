@@ -2,9 +2,11 @@ package org.sydney.twitter.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sydney.twitter.Tweet;
 import org.sydney.twitter.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,6 +61,14 @@ public class FeedServiceTest {
 
         assertTrue(users.size() > 0);
         assertTrue(users.stream().anyMatch(user -> "Ward".equals(user.getName())));
+    }
+
+    @Test
+    public void shouldFindTweetsByUsername(){
+
+        List<Tweet> tweets = feedService.findTweetsByUserName("Alan");
+
+        assertTrue(tweets.size() > 0);
     }
 
     private User createUser(String userName) {
