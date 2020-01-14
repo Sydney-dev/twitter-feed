@@ -1,7 +1,7 @@
 package org.sydney.twitter.service;
 
-import org.sydney.twitter.Tweet;
-import org.sydney.twitter.User;
+import org.sydney.twitter.domain.Tweet;
+import org.sydney.twitter.domain.User;
 
 import java.util.*;
 import java.util.stream.Stream;

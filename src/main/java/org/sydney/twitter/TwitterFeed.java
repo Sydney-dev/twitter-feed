@@ -1,5 +1,7 @@
 package org.sydney.twitter;
 
+import org.sydney.twitter.domain.Tweet;
+import org.sydney.twitter.domain.User;
 import org.sydney.twitter.service.FeedService;
 
 import java.util.List;

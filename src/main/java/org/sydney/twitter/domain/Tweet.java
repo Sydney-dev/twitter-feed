@@ -1,4 +1,4 @@
-package org.sydney.twitter;
+package org.sydney.twitter.domain;
 
 public class Tweet {
 

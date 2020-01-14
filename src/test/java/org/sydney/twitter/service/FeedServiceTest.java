@@ -2,8 +2,8 @@ package org.sydney.twitter.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sydney.twitter.Tweet;
-import org.sydney.twitter.User;
+import org.sydney.twitter.domain.Tweet;
+import org.sydney.twitter.domain.User;
 
 import java.util.HashMap;
 import java.util.List;
