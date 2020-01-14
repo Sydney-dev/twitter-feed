@@ -4,14 +4,14 @@ import org.sydney.twitter.Tweet;
 import org.sydney.twitter.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FeedService {
 
     public static final String FOLLOWS_DELIMITER = "follows";
     public static final String COMMA_DELIMITER = ",";
-    private List<String> tweets;
+    public static final String TWEET_DELIMITER = ">";
+    public static final int TWEET_LENGTH = 140;
 
     public Set<User> retrieveUser(String fileName) {
         Map<String, User> users = new HashMap<>();
@@ -46,25 +46,25 @@ public class FeedService {
         return name.replace(" ", "");
     }
 
-    public List<Tweet> findTweetsByUserName(String username) {
+    public List<Tweet> loadTweets(String filename) {
         List<Tweet> tweets = new ArrayList<>();
-
-        getTweets().forEach(line-> {
-            String[] splitLine = line.split(">");
+        Stream<String> lines = FileReader.readFile(filename);
+        lines.forEach(line-> {
+            String[] splitLine = line.split(TWEET_DELIMITER);
+            String text = splitLine[1].trim();
+            validateTweetLength(text);
             tweets.add(Tweet.newBuilder()
                     .withUser(splitLine[0])
-                    .withText(splitLine[1])
+                    .withText(text)
                     .build());
         });
 
         return tweets;
     }
 
-    public List<String> getTweets() {
-        if (this.tweets == null) {
-            tweets = FileReader.readFile("tweet.txt")
-                    .collect(Collectors.toList());
+    private void validateTweetLength(String text) {
+        if(text.length() > TWEET_LENGTH){
+            throw new RuntimeException("Tweet should be at most 140 characters.");
         }
-        return tweets;
     }
 }

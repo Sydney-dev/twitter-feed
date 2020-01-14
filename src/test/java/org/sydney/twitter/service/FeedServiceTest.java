@@ -24,7 +24,6 @@ public class FeedServiceTest {
 
     @Test
     public void shouldGetExistingUser() {
-
         String userName = "Sydney";
         String userName2 = "Chauke";
 
@@ -64,16 +63,13 @@ public class FeedServiceTest {
     }
 
     @Test
-    public void shouldFindTweetsByUsername(){
-
-        List<Tweet> tweets = feedService.findTweetsByUserName("Alan");
-
+    public void shouldLoadTweetsFromFile() {
+        List<Tweet> tweets = feedService.loadTweets("tweet.txt");
         assertTrue(tweets.size() > 0);
     }
 
     private User createUser(String userName) {
         return new User(userName);
     }
-
 
 }
