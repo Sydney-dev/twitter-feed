@@ -1,8 +1,0 @@
-package org.sydney.twitter;
-
-public class Twitter {
-
-    public static void main(String[] args) {
-
-    }
-}
