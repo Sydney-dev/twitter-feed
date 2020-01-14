@@ -1,30 +1,23 @@
 package org.sydney.twitter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class User {
+public class User implements Comparable<User>{
     private String name;
-    private List<User> followers;
+    private Set<User> followings;
 
     public User(String name) {
         this.name = name;
-        this.followers = new ArrayList<>();
+        this.followings = new HashSet<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Set<User> getFollowings() {
+        return followings;
     }
-
-    public List<User> getFollowers() {
-        return followers;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -37,5 +30,10 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return this.getName().compareTo(user.getName());
     }
 }
