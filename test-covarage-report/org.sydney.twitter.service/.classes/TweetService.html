@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TweetService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.sydney.twitter.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TweetService (org.sydney.twitter.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TweetService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.sydney.twitter.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.sydney.twitter.domain.Tweet;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;import java.util.stream.Stream;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import static java.lang.String.format;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public class TweetService {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public static final String TWEET_DELIMITER = &quot;&gt;&quot;;
+<i>14</i>&nbsp;    public static final int TWEET_LENGTH = 140;
+<i>15</i>&nbsp;    public static final String TWEET_LENGTH_ERROR = &quot;Tweet should be at most 140 characters, but got [%s] characters&quot;;
+<i>16</i>&nbsp;    private FileReader fileReader;
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;    public TweetService(FileReader fileReader) {</b>
+<b class="fc"><i>19</i>&nbsp;        this.fileReader = fileReader;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public List&lt;Tweet&gt; loadTweets(String filename) {
+<b class="fc"><i>23</i>&nbsp;        List&lt;Tweet&gt; tweets = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>24</i>&nbsp;        Stream&lt;String&gt; lines = fileReader.readFile(filename);</b>
+<b class="fc"><i>25</i>&nbsp;        lines.forEach(line -&gt; buildTweet(tweets, line));</b>
+<b class="fc"><i>26</i>&nbsp;        return tweets;</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    protected void buildTweet(List&lt;Tweet&gt; tweets, String line) {
+<b class="fc"><i>30</i>&nbsp;        String[] splitLine = line.split(TWEET_DELIMITER);</b>
+<b class="fc"><i>31</i>&nbsp;        String text = splitLine[1].trim();</b>
+<b class="fc"><i>32</i>&nbsp;        validateTweetLength(text);</b>
+<b class="fc"><i>33</i>&nbsp;        tweets.add(Tweet.newBuilder()</b>
+<b class="fc"><i>34</i>&nbsp;                .withUser(splitLine[0])</b>
+<b class="fc"><i>35</i>&nbsp;                .withText(text)</b>
+<b class="fc"><i>36</i>&nbsp;                .build());</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    private void validateTweetLength(String text) {
+<b class="fc"><i>40</i>&nbsp;        if (text.length() &gt; TWEET_LENGTH) {</b>
+<b class="fc"><i>41</i>&nbsp;            throw new RuntimeException(format(TWEET_LENGTH_ERROR, text.length()));</b>
+<i>42</i>&nbsp;        }
+<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-01-15 21:36</div>
+</div>
+</body>
+</html>
