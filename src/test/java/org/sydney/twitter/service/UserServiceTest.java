@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserServiceTest {
 
+    public static final String USER_NAME_1 = "Sydney";
+    public static final String USER_NAME_2 = "Chauke";
     private UserService userService;
 
     @Before
@@ -21,42 +23,38 @@ public class UserServiceTest {
 
     @Test
     public void shouldGetExistingUser() {
-        String userName = "Sydney";
-        String userName2 = "Chauke";
 
         Map<String, User> users = new HashMap<>();
-        users.put(userName, createUser(userName));
-        users.put(userName2, createUser(userName2));
+        users.put(USER_NAME_1, createUser(USER_NAME_1));
+        users.put(USER_NAME_2, createUser(USER_NAME_2));
 
-        User user = userService.getUser(users, userName);
+        User user = userService.getUser(users, USER_NAME_1);
 
-        assertEquals(user.getName(), userName);
-        assertEquals(users.size(), 2);
+        assertThat(user.getName()).isEqualTo(USER_NAME_1);
+        assertThat(users).hasSize(2);
     }
 
     @Test
     public void shouldCreateUserIfDoesNotExist() {
-
-        String userName = "Sydney";
-        String userName2 = "Chauke";
-
         Map<String, User> users = new HashMap<>();
-        users.put(userName2, createUser(userName2));
+        users.put(USER_NAME_2, createUser(USER_NAME_2));
 
-        assertEquals(users.size(), 1);
+        assertThat(users).hasSize(1);
 
-        User user = userService.getUser(users, userName);
+        User user = userService.getUser(users, USER_NAME_1);
 
-        assertEquals(user.getName(), userName);
-        assertEquals(2, users.size());
+        assertThat(user.getName()).isEqualTo(USER_NAME_1);
+        assertThat(users).hasSize(2);
     }
 
     @Test
     public void shouldLoadUsersFromFile() {
         Set<User> users = userService.retrieveUser("user.txt");
 
-        assertTrue(users.size() > 0);
-        assertTrue(users.stream().anyMatch(user -> "Ward".equals(user.getName())));
+        assertThat(users)
+                .hasSize(3)
+                .extracting(User::getName)
+                .contains("Ward");
     }
 
 

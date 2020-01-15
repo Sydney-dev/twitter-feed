@@ -31,7 +31,7 @@ public class FeedServiceTest {
     }
 
     @Test
-    public void shouldExtractBuildTweet() {
+    public void shouldBuildTweet() {
 
         List<Tweet> tweets = new ArrayList<>();
         String line = "Alan> If you have a procedure with 10 parameters, you probably missed some.";
