@@ -4,6 +4,7 @@ import org.sydney.twitter.domain.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
@@ -22,17 +23,20 @@ public class TweetService {
     public List<Tweet> loadTweets(String filename) {
         List<Tweet> tweets = new ArrayList<>();
         Stream<String> lines = fileReader.readFile(filename);
-        lines.forEach(line -> buildTweet(tweets, line));
+        final AtomicInteger count = new AtomicInteger();
+        lines.forEach(line -> buildTweet(tweets, line, count));
         return tweets;
     }
 
-    protected void buildTweet(List<Tweet> tweets, String line) {
+    protected void buildTweet(List<Tweet> tweets, String line, AtomicInteger count) {
         String[] splitLine = line.split(TWEET_DELIMITER);
         String text = splitLine[1].trim();
         validateTweetLength(text);
+        int priority = count.getAndIncrement();
         tweets.add(Tweet.newBuilder()
                 .withUser(splitLine[0])
                 .withText(text)
+                .withPriority(Long.valueOf(priority))
                 .build());
     }
 

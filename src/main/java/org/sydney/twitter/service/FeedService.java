@@ -3,6 +3,7 @@ package org.sydney.twitter.service;
 import org.sydney.twitter.domain.Tweet;
 import org.sydney.twitter.domain.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -11,7 +12,7 @@ import static java.lang.String.format;
 
 public class FeedService {
 
-    public static final String TWEET_FORMATTER = "\t@%s: %s";
+    public static final String TWEET_FORMATTER = "%s \t@%s: %s";
 
     private UserService userService;
     private TweetService tweetService;
@@ -27,16 +28,22 @@ public class FeedService {
 
         users.forEach(user -> {
             System.out.println(user.getName());
-            printUserTweet(tweets, user);
-            user.getFollowings().forEach(following -> printUserTweet(tweets, following));
+            List<String> feeds = new ArrayList<>();
+            appendTweets(tweets, user, feeds);
+            user.getFollowings().forEach(following -> appendTweets(tweets, following, feeds));
+
+            feeds.stream()
+                    .sorted()
+                    .map(line -> line.substring(line.indexOf("\t")))
+                    .forEach(System.out::println);
         });
     }
 
-    protected void printUserTweet(List<Tweet> tweets, User user) {
+    protected void appendTweets(List<Tweet> tweets, User user, List<String> feeds) {
         Objects.requireNonNull(user, "User is mandatory.");
         tweets.forEach(tweet -> {
             if (tweet.getUser().equals(user.getName())) {
-                System.out.println(format(TWEET_FORMATTER, tweet.getUser(), tweet.getText()));
+                feeds.add(format(TWEET_FORMATTER, tweet.getPriority(), tweet.getUser(), tweet.getText()));
             }
         });
     }

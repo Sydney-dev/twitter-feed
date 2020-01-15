@@ -4,10 +4,12 @@ public class Tweet {
 
     private String user;
     private String text;
+    private Long priority;
 
     private Tweet(Builder builder) {
         setUser(builder.user);
         setText(builder.text);
+        setPriority(builder.priority);
     }
 
     public static Builder newBuilder(){
@@ -30,9 +32,18 @@ public class Tweet {
         this.text = text;
     }
 
+    public Long getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Long priority) {
+        this.priority = priority;
+    }
+
     public static final class Builder {
         private String user;
         private String text;
+        private Long priority;
 
         private Builder() {
         }
@@ -47,10 +58,13 @@ public class Tweet {
             return this;
         }
 
+        public Builder withPriority(Long priority){
+            this.priority = priority;
+            return this;
+        }
 
         public Tweet build() {
             return new Tweet(this);
         }
-
     }
 }

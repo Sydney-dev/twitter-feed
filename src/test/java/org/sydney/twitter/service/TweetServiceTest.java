@@ -9,6 +9,7 @@ import org.sydney.twitter.domain.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,7 +45,8 @@ public class TweetServiceTest {
 
         List<Tweet> tweets = new ArrayList<>();
         String line = "Alan> If you have a procedure with 10 parameters, you probably missed some.";
-        tweetService.buildTweet(tweets, line);
+        final AtomicInteger count = new AtomicInteger();
+        tweetService.buildTweet(tweets, line, count);
 
         assertThat(tweets)
                 .hasSize(1)
@@ -59,7 +61,8 @@ public class TweetServiceTest {
             List<Tweet> tweets = new ArrayList<>();
             String line = "Alan> If you have a procedure with 10 parameters, you probably missed some." +
                     "If you have a procedure with 10 parameters, you probably missed some or two.";
-            tweetService.buildTweet(tweets, line);
+            final AtomicInteger count = new AtomicInteger();
+            tweetService.buildTweet(tweets, line, count);
             fail("Expected tweet length exception.");
         } catch (Exception ex) {
             assertThat(ex).hasMessage(expectedErrorMessage);
