@@ -11,7 +11,7 @@ public class FileReader {
 
     public static final String FILE_NOT_FOUND = "Unable to read this file [%s]";
 
-    public static Stream<String> readFile(String fileName) {
+    public Stream<String> readFile(String fileName) {
         try {
             Path path = Paths.get(FileReader.class.getClassLoader()
                     .getResource(fileName).toURI());

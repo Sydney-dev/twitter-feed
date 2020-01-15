@@ -9,10 +9,15 @@ public class UserService {
 
     public static final String FOLLOWS_DELIMITER = "follows";
     public static final String COMMA_DELIMITER = ",";
+    private FileReader fileReader;
+
+    public UserService(FileReader fileReader) {
+        this.fileReader = fileReader;
+    }
 
     public Set<User> retrieveUser(String fileName) {
         Map<String, User> users = new HashMap<>();
-        Stream<String> lines = FileReader.readFile(fileName);
+        Stream<String> lines = this.fileReader.readFile(fileName);
         lines.forEach(line -> populateUsers(users, line.split(FOLLOWS_DELIMITER)));
         return new TreeSet<>(users.values());
     }

@@ -24,8 +24,8 @@ public class FeedService {
 
     public List<Tweet> loadTweets(String filename) {
         List<Tweet> tweets = new ArrayList<>();
-        Stream<String> lines = FileReader.readFile(filename);
-        lines.forEach(line -> buildTweet(tweets, line));
+//        Stream<String> lines = FileReader.readFile(filename);
+//        lines.forEach(line -> buildTweet(tweets, line));
         return tweets;
     }
 

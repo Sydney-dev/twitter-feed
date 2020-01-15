@@ -1,7 +1,9 @@
 package org.sydney.twitter.service;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.sydney.twitter.domain.Tweet;
 
 import java.util.ArrayList;
@@ -10,15 +12,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+@RunWith(MockitoJUnitRunner.class)
 public class FeedServiceTest {
 
-
+    @InjectMocks
     private FeedService feedService;
-
-    @Before
-    public void setUp() {
-        feedService = new FeedService(new UserService());
-    }
 
     @Test
     public void shouldLoadTweetsFromFile() {

@@ -1,12 +1,14 @@
 package org.sydney.twitter;
 
 import org.sydney.twitter.service.FeedService;
+import org.sydney.twitter.service.FileReader;
 import org.sydney.twitter.service.UserService;
 
 public class TwitterFeed {
 
     public static void main(String[] args) {
-        FeedService feedService = new FeedService(new UserService());
+        FileReader fileReader = new FileReader();
+        FeedService feedService = new FeedService(new UserService(fileReader));
         feedService.printTweetFeeds("user.txt", "tweet.txt");
     }
 
